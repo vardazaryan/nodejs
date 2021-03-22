@@ -1,17 +1,61 @@
-// 3․ Ստեծել ֆունկցիա , որը input.txt ֆայլի պարունակությունը կկարդա , հետո պարունակության տեքստը կկիսի երկու
-// մասի և միաժամանակ կգրի առաջին մասը output1.txt , իսկ երկրորդը output2.txt ֆայլերի մեջ։
-// Օգտվել 'fs/promises' գրադարանից և օգտագործել async/await:
-let  fs = require('fs/promises');
-fs.readFile('input.txt').then( function (data){
-    async function fil() {
-       const dat=data.toString()
-        let promise1= await fs.writeFile('output3.txt ', dat.toString().slice(0,dat.length/2).concat(`${Date.now()}`));
-        let promise2 = await fs.writeFile('output4.txt', data.toString().slice(data.length/2,data.length).concat(`${ Date.now()}`))
+//     3.Ստեղծել RemoveSpecialChars կլաս, որը ժառանգում է
+//     Transform կլասին: _transform մեթոդը վերասահմանել այնպես, որ իր միջով անցնող տեքստից հեռացնել հատուկ սիմվոլները:
+//
+//     Կլասից ստեղծել օբեկտ: homeworkr5.txt պարունակությունը pipe անել օբեկտով և պահապանել homeworkw5.txt ֆայլում:
+const {Readable, Duplex, Writable, Transform} = require('stream');
+const zlib = require('zlib');
+const fs = require('fs');
+
+const writeStreamToFile = fs.createWriteStream('homeworkr5.txt');
+const readStream = fs.createReadStream('input.txt', {
+    highWaterMark:64,
+});
+
+class RemoveSpecialChars extends Transform {
+    _transform (chunk, encoding, callback) {
+
+        writeStreamToFile.write(chunk.toString().replace(/[^a-zA-Z0-9' ']/gi, ""));
+        //writeStreamToFile.write(chunk.toString());
+        console.log(chunk.toString());
+
+        callback();
+    }
+}
+
+const RemoveSpecial = new RemoveSpecialChars ({ });
+readStream.pipe(RemoveSpecial);
+;
 
 
-    }
-fil().then( console.log(Date.now())  );
-    }
-)
+// const transform = new Transform({
+//     transform(chunk, encoding, next) {
+//        let res=chunk.toString().replace(/[^a-zA-Z0-9" "]/gi, "");
+//     return res;
+//         next();
+//     }
+// });
+// .pipe(transform).pipe(writeStreamToFile);
+// class RemoveSpecialChars extends Readable {
+//     constructor(array) {
+//         super();
+//         this.array = array;
+//         this.index = 0;
+//     }
+//     _transform(){
+//
+//     }
+//
+//     _read(size) {
+//         if (this.index < this.array.length/2) {
+//             this.push(this.array[this.index].toString());
+//             this.index++;
+//         } else {
+//             this.push(null);
+//         }
+//     }
+//
+//
+// }
+
 
 

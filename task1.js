@@ -1,26 +1,17 @@
-// 1. Ստեղծել Promise վերադարձնող ֆունկցիա , որը գեներացնում է 0 - 10 միջակայքի թիվ և ստուգում , եթե թիվը փոքր է
-// 5-ից reject է անում , հակառակ դեպքում resolve . Աշխատացնել ֆունկցիան և տպել արժեքները։
-const random = require('random');
 
+// 1. Ստեղծել readStream որը input.txt-ից կկարդա ինֆորմացիան
+// 10 բայթով և կաևտածի կոնսոլում այն chunk-երը , որոնք հատուկ սիմվոլներ չունեն:
+const {Readable, Duplex, Writable, Transform} = require('stream');
+const fs = require('fs');
 
-const promise1 = new Promise((resolve, reject) => {
+const readStream = fs.createReadStream('input.txt', {
+    highWaterMark: 10,
+});
 
-    let rand=random.int(0,10);
-    if(rand>5) {
+readStream.on('data',function (chunk) {
+    if (!/[^a-zA-Z0-9' ']/.test( chunk.toString())) {//եթե պրոբելը չհամարենք հատուկ սիմվոլ
+        console.log(chunk.toString());
 
-
-        resolve(`${rand} `);
-    }else{
-        reject(`error`);
     }
+
 });
-
-promise1.then((value) => {
-
-        console.log(value);
-});
-
-console.log("next operation");
-
-
-
