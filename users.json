@@ -1,0 +1,7 @@
+{
+  "person": [
+    {"fisrt_name": "a", "last_name": "aa", "email": "iartr@yahoo.com", "age":45,"car":"mers", "model":["Fiesta", "Focus", "Mustang"]},
+    {"fisrt_name": "b", "last_name": "bb","email": "iartr@yahoo.com", "age":45,"car":"BMW", "models":["320", "X3", "X5"]},
+    {"fisrt_name": "c", "last_name": "acc","email": "iartr@yahoo.com", "age":45,"car":"Fiat", "models":["500", "Panda"] }
+  ]
+}
